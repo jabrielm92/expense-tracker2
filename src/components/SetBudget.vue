@@ -47,11 +47,9 @@ export default {
         startDate: this.startDate,
         endDate: this.endDate
       }
-      // save budget data to Firebase
       try {
         const docRef = await db.collection('budgets').add(budget)
         console.log('Budget added with ID: ', docRef.id)
-        // reset form
         this.budgetAmount = 0
         this.budgetPeriod = 'week'
         this.startDate = ''

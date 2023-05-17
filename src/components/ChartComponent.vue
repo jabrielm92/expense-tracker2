@@ -47,7 +47,6 @@
           });
       },
       drawChart() {
-        // only draw the chart when we have fetched both income and expense data
         if (this.incomeTotal && this.expenseTotal) {
           const data = [
             { label: 'Income', value: this.incomeTotal },

@@ -66,7 +66,6 @@ export default {
     };
   },
   created() {
-    // Check if user is logged in
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = user;

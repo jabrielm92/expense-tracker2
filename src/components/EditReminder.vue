@@ -65,7 +65,6 @@
   axios.delete(`/api/reminders/${reminderId}`)
     .then(response => {
       console.log('Reminder deleted!');
-       // Redirect to ViewReminders.vue component
        this.$router.push('/view-reminders');
     })
     .catch(error => {

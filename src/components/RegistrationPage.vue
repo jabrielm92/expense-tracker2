@@ -30,17 +30,13 @@ export default {
     registerUser() {
       auth.createUserWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
-          // User registered successfully
-          // Create a user document in Firestore under the user's ID
           const user = userCredential.user;
           db.collection('users').doc(user.uid).set({
             email: user.email
           })
-          // Redirect to login page
           this.$router.push('/login')
         })
         .catch((error) => {
-          // Handle errors here
           console.error(error.message)
         })
     }

@@ -31,7 +31,6 @@ export default {
     loginUser() {
       try {
          auth.signInWithEmailAndPassword(this.email, this.password)
-        // Redirect to income page on successful login
         router.push('/income')
       } catch (error) {
         console.error(error)

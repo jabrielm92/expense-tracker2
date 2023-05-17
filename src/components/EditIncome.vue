@@ -28,15 +28,11 @@ export default {
   props: ["income"],
   methods: {
     saveIncome() {
-      // emit "income-saved" event to parent component
       this.$emit("income-saved", this.income);
-      // clear form
       this.income = {};
     },
     cancelEdit() {
-      // emit "edit-canceled" event to parent component
       this.$emit("edit-canceled");
-      // clear form
       this.income = {};
     },
   },

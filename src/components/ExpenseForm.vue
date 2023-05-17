@@ -40,16 +40,13 @@ export default {
   },
   methods: {
     submitExpense() {
-      // Add logic to submit expense data to backend or store
       console.log('Expense submitted:', {
         name: this.name,
         amount: this.amount,
         category: this.category,
         date: this.date
       })
-      // Get the current user's ID
       const userId = auth.currentUser.uid;
-      // Save expense to Firestore using the user's ID as part of the collection path
       db.collection(`users/${userId}/expenses`).add({
         name: this.name,
         amount: this.amount,
@@ -57,13 +54,11 @@ export default {
         date: this.date
       }).then((docRef) => {
         console.log('Expense added to Firestore');
-        // Emit an event to send the expense data to DashboardPage
         this.$emit('expense-added', { id: docRef.id, name: this.name, amount: this.amount, category: this.category, date: this.date });
       }).catch((error) => {
         console.error('Error adding expense to Firestore:', error);
       });
 
-      // Clear form fields
       this.name = ''
       this.amount = null
       this.category = ''

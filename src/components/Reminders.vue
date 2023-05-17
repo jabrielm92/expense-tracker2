@@ -82,7 +82,6 @@
         this.showAddReminderForm = false;
       },
       editReminder(index) {
-        // Implement edit functionality
       },
       deleteReminder(index) {
         this.reminders.splice(index, 1);

@@ -44,7 +44,6 @@ export default {
         .add(newIncome)
         .then(() => {
           this.$emit("added-income", newIncome);
-          // clear the form
           this.name = "";
           this.amount = "";
           this.description = "";

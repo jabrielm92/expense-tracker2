@@ -39,18 +39,16 @@ export default {
   },
   methods: {
     addReminder() {
-      // validate form
       if (!this.reminder.title || !this.reminder.date || !this.reminder.time) {
         alert('Please fill in all required fields');
         return;
       }
 
-      // save reminder to Firebase
+
       const remindersRef = firebase.database().ref('reminders');
       const newReminderRef = remindersRef.push();
       newReminderRef.set(this.reminder);
 
-      // clear form
       this.reminder.title = '';
       this.reminder.description = '';
       this.reminder.date = '';
