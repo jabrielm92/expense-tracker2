@@ -5,12 +5,10 @@ import RegistrationPage from '@/components/RegistrationPage.vue'
 import HomePage from '@/components/HomePage.vue'
 import ProfilePage from '@/components/ProfilePage.vue'
 import ChartComponent from '@/components/ChartComponent.vue'
+import EditTransactions from '@/components/EditTransactions.vue'
 
 import ExpenseForm from '@/components/ExpenseForm.vue'
 import IncomeForm from '@/components/IncomeForm.vue'
-import ViewBudget from '@/views/ViewBudget.vue'
-import ViewReminders from '@/views/ViewReminders.vue'
-
 
 const routes = [
   {
@@ -49,20 +47,15 @@ const routes = [
     component: IncomeForm
   },
   {
-    path: '/budget',
-    name: 'ViewBudget',
-    component: ViewBudget
-  },
-  {
     path: '/chart',
     name: 'ChartComponent',
     component: ChartComponent
   },
   {
-    path: '/reminders',
-    name: 'ViewReminders',
-    component: ViewReminders
-  }  
+    path: '/edittransactions',
+    name: 'EditTransactions',
+    component: EditTransactions
+  }
 ]
 
 const router = createRouter({

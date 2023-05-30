@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <h2>Register</h2>
+  <div class="registration-container">
+    <h2>Sign-Up</h2>
     <form @submit.prevent="registerUser">
-      <div>
+      <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" type="email" v-model="email" required>
+        <input id="email" type="email" v-model="email" required class="input-field">
       </div>
-      <div>
+      <div class="form-group">
         <label for="password">Password</label>
-        <input id="password" type="password" v-model="password" required>
+        <input id="password" type="password" v-model="password" required class="input-field">
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" class="register-button">Sign-Up</button>
     </form>
   </div>
 </template>
@@ -45,38 +45,55 @@ export default {
 </script>
 
 <style scoped>
-.registration {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.registration-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f8f8;
 }
 
-.registration h2 {
-  text-align: center;
-  margin-bottom: 2rem;
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-.registration label {
-  display: block;
+form {
+  width: 300px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
-.registration input {
+.input-field {
   width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 0.8rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.registration button[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
+.register-button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 1rem;
   border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  padding: 0.8rem 1.6rem;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.register-button:hover {
+  background-color: #0056b3;
 }
 </style>
+
+

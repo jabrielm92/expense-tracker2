@@ -23,7 +23,7 @@
               <router-link class="nav-link" to="/login" v-if="!user">Login</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/register" v-if="!user">Register</router-link>
+              <router-link class="nav-link" to="/register" v-if="!user">Sign-Up</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/dashboard" v-if="user">Dashboard</router-link>
@@ -35,10 +35,7 @@
               <router-link class="nav-link" to="/expenses" v-if="user">Expenses</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/budget" v-if="user">Budget</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/reminders" v-if="user">Reminders</router-link>
+              <router-link class="nav-link" to="/edittransactions" v-if="user">Edit Transactions</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/profile" v-if="user">Profile</router-link>

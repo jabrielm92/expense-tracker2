@@ -1,104 +1,153 @@
 <template>
-    <div id="pie-chart"></div>
-  </template>
-  
-  <script>
-  import * as d3 from 'd3';
-  import { db, auth } from '@/firebase.js';
-  
-  export default {
-    name: 'ChartComponent',
-    data() {
-      return {
-        incomeTotal: 0,
-        expenseTotal: 0
-      };
-    },
-    created() {
-      this.fetchData();
-    },
-    methods: {
-      fetchData() {
-        const userId = auth.currentUser.uid;
-        db.collection(`users/${userId}/income`).get()
-          .then((querySnapshot) => {
-            let total = 0;
-            querySnapshot.forEach((doc) => {
-              total += doc.data().amount;
-            });
-            this.incomeTotal = total;
-            this.drawChart();
-          })
-          .catch((error) => {
-            console.error('Error fetching income total:', error);
-          });
-          
-        db.collection(`users/${userId}/expenses`).get()
-          .then((querySnapshot) => {
-            let total = 0;
-            querySnapshot.forEach((doc) => {
-              total += doc.data().amount;
-            });
-            this.expenseTotal = total;
-            this.drawChart();
-          })
-          .catch((error) => {
-            console.error('Error fetching expense total:', error);
-          });
-      },
-      drawChart() {
-        if (this.incomeTotal && this.expenseTotal) {
-          const data = [
-            { label: 'Income', value: this.incomeTotal },
-            { label: 'Expenses', value: this.expenseTotal }
-          ];
-          
-          const width = 300;
-          const height = 300;
-          const radius = Math.min(width, height) / 2;
-  
-          const svg = d3.select('#pie-chart')
-            .append('svg')
-            .attr('width', width)
-            .attr('height', height)
-            .append('g')
-            .attr('transform', `translate(${width / 2},${height / 2})`);
-  
-          const color = d3.scaleOrdinal()
-            .domain(data.map(d => d.label))
-            .range(['#5CB85C', '#D9534F']);
-  
-          const pie = d3.pie()
-            .sort(null)
-            .value(d => d.value);
-  
-          const path = d3.arc()
-            .outerRadius(radius - 10)
-            .innerRadius(0);
-  
-          const label = d3.arc()
-            .outerRadius(radius - 40)
-            .innerRadius(radius - 40);
-  
-          const arc = svg.selectAll('.arc')
-            .data(pie(data))
-            .enter()
-            .append('g')
-            .attr('class', 'arc');
-  
-          arc.append('path')
-            .attr('d', path)
-            .attr('fill', d => color(d.data.label));
-  
-          arc.append('text')
-            .attr('transform', d => `translate(${label.centroid(d)})`)
-            .attr('dy', '0.35em')
-            .text(d => d.data.label);
-        }
+  <div class="chart-container">
+    <div ref="chart"></div>
+    <div class="chart-legend">
+      <div class="legend-item">
+        <div class="legend-color legend-income"></div>
+        <div class="legend-label">Total Income: ${{ totalIncome }}</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-expense"></div>
+        <div class="legend-label">Total Expense: ${{ totalExpense }}</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color legend-balance"></div>
+        <div class="legend-label">Balance: ${{ balance }}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { db, auth } from '@/firebase.js';
+import Highcharts from 'highcharts';
+
+export default {
+  name: 'ChartComponent',
+  data() {
+    return {
+      totalIncome: 0,
+      totalExpense: 0,
+      balance: 0,
+    };
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      const userId = auth.currentUser.uid;
+
+      try {
+        const incomeQuerySnapshot = await db.collection(`users/${userId}/income`).get();
+        const expenseQuerySnapshot = await db.collection(`users/${userId}/expenses`).get();
+
+        const incomeData = incomeQuerySnapshot.docs.map((doc) => doc.data());
+        const expenseData = expenseQuerySnapshot.docs.map((doc) => doc.data());
+
+        this.totalIncome = incomeData.reduce((sum, transaction) => sum + transaction.amount, 0);
+        this.totalExpense = expenseData.reduce((sum, transaction) => sum + transaction.amount, 0);
+        this.balance = this.totalIncome - this.totalExpense;
+
+        this.renderChart();
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-    }
-  };
-  </script>
+    },
+    renderChart() {
+      Highcharts.chart(this.$refs.chart, {
+        chart: {
+          type: 'pie',
+        },
+        title: {
+          text: 'Income vs Expense',
+        },
+        tooltip: {
+          pointFormat: '<b>{point.y}</b> ({point.percentage:.1f}%)',
+        },
+        series: [
+          {
+            name: 'Amount',
+            data: [
+              {
+                name: 'Total Income',
+                y: this.totalIncome,
+                color: '#4CAF50',
+              },
+              {
+                name: 'Total Expense',
+                y: this.totalExpense,
+                color: '#F44336',
+              },
+            ],
+          },
+        ],
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: ${point.y}',
+            },
+          },
+        },
+      });
+    },
+  },
+};
+</script>
+
+<style scoped>
+.chart-container {
+  position: relative;
+  height: 400px;
+  margin-top: 2rem;
+}
+
+.chart-legend {
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #F5F5F5;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+}
+
+.legend-color {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.legend-income {
+  background-color: #4CAF50;
+}
+
+.legend-expense {
+  background-color: #F44336;
+}
+
+.legend-balance {
+  background-color: #2196F3;
+}
+
+.legend-label {
+  font-size: 0.8rem;
+}
+</style>
+
+
+
+
+
+
   
 
   

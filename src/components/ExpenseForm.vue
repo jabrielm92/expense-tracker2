@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Add Expense</h1>
-    <form>
+    <h1 class="form-heading">Add Expense</h1>
+    <form class="expense-form">
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" v-model="name" placeholder="Enter expense name">
@@ -24,6 +24,7 @@
     </form>
   </div>
 </template>
+
 <script>
 import { db, auth } from "@/firebase.js";
 
@@ -67,4 +68,56 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.container {
+  padding: 2rem;
+}
+
+.form-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.expense-form {
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.expense-form input[type="text"],
+.expense-form input[type="number"],
+.expense-form select,
+.expense-form input[type="date"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.expense-form button[type="submit"] {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.expense-form button[type="submit"]:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.expense-form input:focus,
+.expense-form select:focus,
+.expense-form input[type="date"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+</style>
+
 

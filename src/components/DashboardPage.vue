@@ -5,50 +5,49 @@
       <div class="col-md-6">
         <div class="card mb-3">
           <div class="card-header"> Total Income</div>
-            <div class="card-body">
-            <h5 class="card-title">${{incomeTotal}}</h5>
+          <div class="card-body">
+            <h5 class="card-title">${{ incomeTotal }}</h5>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="card mb-3">
           <div class="card-header"> Total Expenses</div>
-            <div class="card-body">
-            <h5 class="card-title">${{expenseTotal}}</h5>
+          <div class="card-body">
+            <h5 class="card-title">${{ expenseTotal }}</h5>
           </div>
         </div>
       </div>
-      <div class="row">
+    </div>
+    <div class="row">
       <div class="col-md-12">
         <div class="card mb-3">
           <div class="card-header"> Recent Transactions</div>
-            <div class="card-body">
-              <table class="table">
-               <thead>
+          <div class="card-body">
+            <table class="table">
+              <thead>
                 <tr>
                   <th>Name</th>
                   <th>Amount</th>
                   <th>Category</th>
                   <th>Date</th>
-              </tr>
-            </thead>
-            <tbody> </tbody>
-              <tr v-for="transaction in transactions" :key="transaction.id">
-                  <td>{{transaction.name}}</td>
-                  <td>{{transaction.amount}}</td>
-                  <td>{{transaction.category}}</td>
-                  <td>{{transaction.date}}</td>
-              </tr>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="transaction in transactions" :key="transaction.id">
+                  <td>{{ transaction.name }}</td>
+                  <td>{{ transaction.amount }}</td>
+                  <td>{{ transaction.category }}</td>
+                  <td>{{ transaction.date }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
+    <ChartComponent />
   </div>
-</div>
-<div class="chart-container">
-    <chart-component :title="'Transactions'"/>
-</div>
 </template>
 
 <script>
@@ -64,8 +63,8 @@ export default {
     return {
       incomeTotal: 0,
       expenseTotal: 0,
-      transactions: []
-    }
+      transactions: [],
+    };
   },
   created() {
     this.fetchIncomeTotal();
@@ -75,7 +74,8 @@ export default {
   methods: {
     fetchIncomeTotal() {
       const userId = auth.currentUser.uid;
-      db.collection(`users/${userId}/income`).get()
+      db.collection(`users/${userId}/income`)
+        .get()
         .then((querySnapshot) => {
           let total = 0;
           querySnapshot.forEach((doc) => {
@@ -89,7 +89,8 @@ export default {
     },
     fetchExpenseTotal() {
       const userId = auth.currentUser.uid;
-      db.collection(`users/${userId}/expenses`).get()
+      db.collection(`users/${userId}/expenses`)
+        .get()
         .then((querySnapshot) => {
           let total = 0;
           querySnapshot.forEach((doc) => {
@@ -103,7 +104,8 @@ export default {
     },
     fetchAllTransactions() {
       const userId = auth.currentUser.uid;
-      db.collection(`users/${userId}/income`).get()
+      db.collection(`users/${userId}/income`)
+        .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             let transaction = doc.data();
@@ -115,8 +117,9 @@ export default {
         .catch((error) => {
           console.error('Error fetching income transactions:', error);
         });
-        
-      db.collection(`users/${userId}/expenses`).get()
+
+      db.collection(`users/${userId}/expenses`)
+        .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             let transaction = doc.data();
@@ -128,32 +131,41 @@ export default {
         .catch((error) => {
           console.error('Error fetching expense transactions:', error);
         });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
 .container {
   padding: 2rem;
+  justify-content: center;
+  background-color: #55c255;
+  color: #333;
 }
 
 .card-header {
-  background-color: #333;
+  background-color: #222;
   color: #fff;
+  padding: 1rem;
+  border-radius: 8px 8px 0 0;
 }
 
 .card-body {
   background-color: #f2f2f2;
+  padding: 1rem;
 }
 
 .table {
   background-color: #fff;
+  border-collapse: collapse;
+  width: 100%;
 }
 
 .table td,
 .table th {
   border: 1px solid #e6e6e6;
+  padding: 0.5rem;
 }
 
 .table thead th {
@@ -164,28 +176,29 @@ export default {
 .card {
   background-color: #fff;
   border: none;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   margin-bottom: 2rem;
 }
 
 .card-title {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 0;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
 .row {
   margin: 0 -0.5rem;
 }
 
-.col-md-6 {
-  padding: 0 0.5rem;
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
 }
 
-.chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50vh; 
+.col-md-6 {
+  padding: 0 0.5rem;
 }
 </style>
