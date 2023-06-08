@@ -174,7 +174,6 @@ h2 {
 
 .table th,
 .table td {
-  padding: 0.5rem;
   text-align: left;
   border-bottom: 1px solid #ccc;
 }
@@ -190,7 +189,7 @@ h2 {
 .remaining-budget {
   margin-top: 1rem;
   font-weight: bold;
-  color: #4CAF50;
+  color: #c90000;
 }
 
 .no-budget {

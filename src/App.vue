@@ -11,43 +11,44 @@
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          @click="toggleNavbar"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" :class="{ 'show': navbarOpen }" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <router-link class="nav-link" to="/">Home</router-link>
+              <router-link class="nav-link" to="/" @click="closeNavbar">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/login" v-if="!user">Login</router-link>
+              <router-link class="nav-link" to="/login" v-if="!user" @click="closeNavbar">Login</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/register" v-if="!user">Sign-Up</router-link>
+              <router-link class="nav-link" to="/register" v-if="!user" @click="closeNavbar">Sign-Up</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/dashboard" v-if="user">Dashboard</router-link>
+              <router-link class="nav-link" to="/dashboard" v-if="user" @click="closeNavbar">Dashboard</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/income" v-if="user">Income</router-link>
+              <router-link class="nav-link" to="/income" v-if="user" @click="closeNavbar">Income</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/expenses" v-if="user">Expenses</router-link>
+              <router-link class="nav-link" to="/expenses" v-if="user" @click="closeNavbar">Expenses</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/edittransactions" v-if="user">Edit Transactions</router-link>
+              <router-link class="nav-link" to="/edittransactions" v-if="user" @click="closeNavbar">Edit Transactions</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/setbudget" v-if="user">Set Budget</router-link>
+              <router-link class="nav-link" to="/setbudget" v-if="user" @click="closeNavbar">Set Budget</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/viewbudget" v-if="user">View Budget</router-link>
+              <router-link class="nav-link" to="/viewbudget" v-if="user" @click="closeNavbar">View Budget</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/profile" v-if="user">Profile</router-link>
+              <router-link class="nav-link" to="/profile" v-if="user" @click="closeNavbar">Profile</router-link>
             </li>
             <li class="nav-item">
-              <button v-if="user" class="nav-link btn btn-link" @click="logout">Logout</button>
+              <button v-if="user" class="nav-link btn btn-link" @click="logout, closeNavbar">Logout</button>
             </li>
           </ul>
         </div>
@@ -58,6 +59,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { auth } from "@/firebase.js";
 
@@ -66,6 +68,7 @@ export default {
   data() {
     return {
       user: null,
+      navbarOpen: false
     };
   },
   created() {
@@ -78,33 +81,47 @@ export default {
     });
   },
   methods: {
+    toggleNavbar() {
+      this.navbarOpen = !this.navbarOpen;
+    },
+    closeNavbar() {
+      this.navbarOpen = false;
+    },
     logout() {
-  auth.signOut()
-    .then(() => {
-      this.user = null;
-      this.$router.push('/');
-    })
-    .catch((error) => {
-      console.error('Error logging out:', error);
-    });
-},
+      auth
+        .signOut()
+        .then(() => {
+          this.user = null;
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.error("Error logging out:", error);
+        });
+    },
     onLoggedIn(user) {
       this.user = user;
     },
   },
 };
 </script>
-<style>
-  #app {
-    font-family: "Open Sans", sans-serif;
-  }
 
-  .container {
-    max-width: 800px;
-  }
+<style scoped>
 
-  .my-4 {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+@media (max-width: 767px) {
+  .navbar-nav {
+    flex-direction: column;
+    background-color: #333;
+    padding: 1rem;
   }
+  
+  .nav-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  .nav-link {
+    color: #fff;
+  }
+}
 </style>
+<style src="./assets/globalStyles.css"></style>
+

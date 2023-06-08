@@ -154,23 +154,26 @@ export default {
 .card-body {
   background-color: #f2f2f2;
   padding: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .table {
   background-color: #fff;
   border-collapse: collapse;
   width: 100%;
+  font-size: 1rem; /* Adjust the font size for better mobile readability */
 }
 
 .table td,
 .table th {
   border: 1px solid #e6e6e6;
   padding: 0.5rem;
+  text-align: center; /* Center the content horizontally */
 }
 
-.table thead th {
-  background-color: #333;
-  color: #fff;
+.table tbody tr {
+  vertical-align: middle; /* Align the rows vertically */
 }
 
 .card {
@@ -190,15 +193,42 @@ export default {
 
 .row {
   margin: 0 -0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: #fff;
+  text-align: center;
 }
 
 .col-md-6 {
-  padding: 0 0.5rem;
+  padding: 0.5rem;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-md-6 {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .col-md-6 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
 }
 </style>

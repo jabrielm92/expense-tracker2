@@ -50,6 +50,18 @@ export default {
   margin-bottom: 2rem;
   text-align: center;
   border-radius: 10px;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-content {
@@ -96,19 +108,38 @@ p {
   gap: 2rem;
   max-width: 900px;
   margin: 0 auto;
+  animation: slideInUp 1s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .feature {
   background-color: #222;
-  padding: 2rem;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  animation: fadeIn 1s ease;
 }
 
 .icon-container {
   font-size: 3rem;
   margin-bottom: 1rem;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .fa-chart-line {
@@ -131,6 +162,3 @@ h2 {
 }
 </style>
 
-
-
-  
