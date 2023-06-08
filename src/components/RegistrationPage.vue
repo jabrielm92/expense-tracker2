@@ -1,6 +1,7 @@
 <template>
   <div class="registration-container">
     <h2>Sign-Up</h2>
+    <h3>To demo: proceed to Login page and enter provided credentials</h3>
     <form @submit.prevent="registerUser">
       <div class="form-group">
         <label for="email">Email</label>

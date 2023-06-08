@@ -6,6 +6,10 @@ import HomePage from '@/components/HomePage.vue'
 import ProfilePage from '@/components/ProfilePage.vue'
 import ChartComponent from '@/components/ChartComponent.vue'
 import EditTransactions from '@/components/EditTransactions.vue'
+import SetBudget from '@/components/SetBudget.vue'
+import ViewBudget from '@/components/ViewBudget.vue'
+import EditBudget from '@/components/EditBudget.vue'
+
 
 import ExpenseForm from '@/components/ExpenseForm.vue'
 import IncomeForm from '@/components/IncomeForm.vue'
@@ -50,6 +54,21 @@ const routes = [
     path: '/chart',
     name: 'ChartComponent',
     component: ChartComponent
+  },
+  {
+    path: '/setbudget',
+    name: 'SetBudget',
+    component: SetBudget
+  },
+  {
+    path: '/viewbudget',
+    name: 'ViewBudget',
+    component: ViewBudget
+  },
+  {
+    path: '/editbudget',
+    name: 'EditBudget',
+    component: EditBudget
   },
   {
     path: '/edittransactions',

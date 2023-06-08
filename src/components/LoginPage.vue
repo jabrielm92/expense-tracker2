@@ -1,6 +1,7 @@
 <template>
   <div class="login-container">
     <h2>Login</h2>
+    <h3>Demo: Login myname@gmail.com Password cookies1</h3>
     <form>
       <div class="form-group">
         <label for="email">Email:</label>

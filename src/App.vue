@@ -38,6 +38,12 @@
               <router-link class="nav-link" to="/edittransactions" v-if="user">Edit Transactions</router-link>
             </li>
             <li class="nav-item">
+              <router-link class="nav-link" to="/setbudget" v-if="user">Set Budget</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/viewbudget" v-if="user">View Budget</router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" to="/profile" v-if="user">Profile</router-link>
             </li>
             <li class="nav-item">

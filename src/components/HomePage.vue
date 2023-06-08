@@ -99,7 +99,7 @@ p {
 }
 
 .feature {
-  background-color: #ffffff;
+  background-color: #222;
   padding: 2rem;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -122,10 +122,12 @@ p {
 h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
+  color: #55c255;
 }
 
 .feature p {
   font-size: 1.2rem;
+  color: #2196f3;
 }
 </style>
 

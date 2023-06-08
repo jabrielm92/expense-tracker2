@@ -28,9 +28,12 @@
 </template>
 
 <script>
-import { db } from '../firebase'
+import { db, auth } from '../firebase'
 
 export default {
+  name: 'SetBudget',
+  components: {
+  },
   data() {
     return {
       budgetAmount: 0,
@@ -41,21 +44,30 @@ export default {
   },
   methods: {
     async submitForm() {
-      const budget = {
-        amount: this.budgetAmount,
-        period: this.budgetPeriod,
-        startDate: this.startDate,
-        endDate: this.endDate
-      }
-      try {
-        const docRef = await db.collection('budgets').add(budget)
-        console.log('Budget added with ID: ', docRef.id)
-        this.budgetAmount = 0
-        this.budgetPeriod = 'week'
-        this.startDate = ''
-        this.endDate = ''
-      } catch (error) {
-        console.error('Error adding budget: ', error)
+      const user = auth.currentUser
+      if (user) {
+        const budget = {
+          amount: this.budgetAmount,
+          period: this.budgetPeriod,
+          startDate: this.startDate,
+          endDate: this.endDate,
+          userId: user.uid
+        }
+        try {
+          const usersCollection = db.collection('users')
+          const userDoc = usersCollection.doc(user.uid)
+          const budgetsCollection = userDoc.collection('budgets')
+          const docRef = await budgetsCollection.add(budget)
+          console.log('Budget added with ID: ', docRef.id)
+          this.budgetAmount = 0
+          this.budgetPeriod = 'week'
+          this.startDate = ''
+          this.endDate = ''
+        } catch (error) {
+          console.error('Error adding budget: ', error)
+        }
+      } else {
+        console.log('User not authenticated')
       }
     }
   }
