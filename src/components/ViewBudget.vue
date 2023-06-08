@@ -145,10 +145,8 @@ export default {
         console.log('Budget updated');
       }
 
-      // Set showEditBudgetForm to false after updating the budget
       this.showEditBudgetForm = false;
 
-      // Fetch the updated budget and transactions
       await this.fetchBudget();
       await this.fetchAllTransactions();
     } catch (error) {

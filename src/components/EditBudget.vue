@@ -91,7 +91,6 @@
             console.log('Budget updated');
           }
 
-          // Emit the "submit" event to close the form
           this.$emit('submit', updatedBudget);
         } catch (error) {
           console.error('Error updating budget:', error);
